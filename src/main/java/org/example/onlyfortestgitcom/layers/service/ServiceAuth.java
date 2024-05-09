@@ -5,6 +5,7 @@ import org.example.onlyfortestgitcom.enumDir.AuthDir;
 import org.example.onlyfortestgitcom.exception.InvalidCredentials;
 import org.example.onlyfortestgitcom.exception.UnauthorizedUser;
 import org.example.onlyfortestgitcom.layers.repository.RepositoryAuth;
+import org.example.onlyfortestgitcom.pojo.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,11 +18,11 @@ public class ServiceAuth {
         this.repositoryAuth = repositoryAuth;
     }
 
-    public List<AuthDir> getAuthorities(String user, String password)  {
-        if (isEmpty(user) || isEmpty(password)) {
+    public List<AuthDir> getAuthorities(User user)  {
+        if (isEmpty(user.getName()) || isEmpty(user.getName())) {
             throw new InvalidCredentials("User name or password is empty");
         }
-        List<AuthDir> userAuthorities = repositoryAuth.getUserAuthorities(user, password);
+        List<AuthDir> userAuthorities = repositoryAuth.getUserAuthorities(user);
         if (isEmpty(userAuthorities)) {
             throw new UnauthorizedUser("Unknown user " + user);
         }
